@@ -1,28 +1,27 @@
 pipeline {
     agent any
 
-    // Trigger every 3 minutes on Mondays
+    tools {
+        maven 'M3' // Matches the name in Jenkins Global Tool Configuration
+    }
+
     triggers {
         cron('H/3 * * * 1') 
     }
 
     stages {
-        // Build stage
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                bat 'mvn clean package' // Use 'bat' instead of 'sh' for Windows
             }
         }
 
-        // Code Coverage stage
         stage('Code Coverage') {
             steps {
-                // Generates code coverage report in target/site/jacoco/
-                sh 'mvn test jacoco:report' 
+                bat 'mvn test jacoco:report'
             }
             post {
                 success {
-                    // Publish JaCoCo report (requires Jenkins JaCoCo plugin)
                     jacoco(
                         execPattern: 'target/jacoco.exec',
                         classPattern: 'target/classes',
