@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'M3' // Matches the name in Jenkins Global Tool Configuration
+        maven 'M3'
     }
 
     triggers {
@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'mvn clean package' // Use 'bat' instead of 'sh' for Windows
+                bat 'mvn clean package' 
             }
         }
 
